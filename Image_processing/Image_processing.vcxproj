@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="E:\! Downloads\opencv\sources\samples\cpp\drawing.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{154E78AF-96D6-4E5E-BC78-BAB24216495C}</ProjectGuid>
