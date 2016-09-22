@@ -1,4 +1,4 @@
-#include "opencv2/core/core.hpp"
+п»ї#include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <stdio.h>
 #include <iostream>
@@ -116,7 +116,7 @@ public:
 		return peakMesure;
 	}
 
-	void smooth(int numPasses) { // сглаживание (см. презентацию)
+	void smooth(int numPasses) { // СЃРіР»Р°Р¶РёРІР°РЅРёРµ (СЃРј. РїСЂРµР·РµРЅС‚Р°С†РёСЋ)
 		int newHist[256] = { };
 
 		for (int k = 0; k < numPasses; k++)
