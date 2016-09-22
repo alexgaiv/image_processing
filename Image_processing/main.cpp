@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+#define THRESHOLD 0.5
 
 /*
 TODO:
@@ -115,6 +116,35 @@ public:
 		std::setprecision(3);
 		return peakMesure;
 	}
+
+	void peakAnalyse() {
+		double measure = 0.0;
+		for (int i = 0; i < vecMax.size() - 1; i++) {
+			if (calculatePeakMeasure(vecMax[i]) < THRESHOLD) {
+				if (vecMax[i] == 0) {
+					for (int i = 0; i < vecMin[0]; i++) {
+						hist[i] = 0;
+					}
+				}
+				if (vecMax[i] == 255) {
+					for (int i = vecMin[vecMin.size() - 1] + 1; i <= 255; i++) {
+						hist[i] = 0;
+					}
+				}
+				if (vecMax[i] > 0 && vecMax[i] < 255) {
+					int leftMin = 0;
+					int rightMin = 0;
+					while (vecMax[i] > vecMin[leftMin + 1]) {
+						leftMin++;
+					}
+					rightMin = leftMin + 1;
+					for (int i = vecMin[leftMin] + 1; i < vecMin[rightMin]; i++) {
+						hist[i] = 0;
+					}
+				}
+			}
+		}
+	}
 };
 
 
@@ -135,6 +165,9 @@ int main() {
 		double tmp = ImageHist.calculatePeakMeasure(ImageHist.vecMax[i]);
 		std::cout << "PEAKMESURE OF " << i << " MAX: "<< std::setprecision(1) << tmp << std::endl;
 	}
+	ImageHist.showHistorgam();
+	ImageHist.peakAnalyse();
+	ImageHist.showHistorgam();
 	exit(0);
 }
 
