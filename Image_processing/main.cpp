@@ -11,7 +11,9 @@ void showImage(cv::Mat* image);
 class Histogram {
 public:
 	int hist[256];
-	std::vector<int> vec;
+	std::vector<int> vecMax;
+	std::vector<int> vecMin;
+
 	Histogram(cv::Mat* image) {
 		for (int i = 0; i < 254; i++) { hist[i] = 0; }
 		for (int i = 0; i < image->cols; i++) {
@@ -22,6 +24,7 @@ public:
 			}
 		}
 	}
+
 	void showHistorgam() {
 		int hist_w = 300;
 		int hist_h = 200;
@@ -33,22 +36,42 @@ public:
 		}
 		showImage(&histImage);
 	}
-	void searchLocalMax(){
-		if (hist[0]>hist[1])
-			vec.push_back(hist[0]);
-		for (int i = 1; i < 255; i++){
-			if (hist[i]>hist[i - 1] && hist[i]>hist[i + 1])
-				vec.push_back(hist[i]);
+
+	void searchLocalMax() {
+		if (hist[0] > hist[1])
+			vecMax.push_back(0);
+		for (int i = 1; i < 255; i++) {
+			if (hist[i] > hist[i - 1] && hist[i] >= hist[i + 1])
+				vecMax.push_back(i);
 		}
 		if (hist[255] > hist[254])
-			vec.push_back(hist[255]);
+			vecMax.push_back(255);
 	}
-	void printLocalMax(){
-		for (int i : vec){
-			std::cout<< i << std::endl;
+
+	void printLocalMax() {
+		std::cout << "Local maximas:\n";
+		for (int i : vecMax) {
+			std::cout << i << std::endl;
 		}
 	}
 	
+	void searchLocalMin() {
+		if (hist[0] < hist[1])
+			vecMin.push_back(0);
+		for (int i = 1; i < 255; i++) {
+			if (hist[i] < hist[i - 1] && hist[i] <= hist[i + 1])
+				vecMin.push_back(i);
+		}
+		if (hist[255] < hist[254])
+			vecMin.push_back(255);
+	}
+
+	void printLocalMin() {
+		std::cout << "Local minimas:\n";
+		for (int i : vecMin) {
+			std::cout << i << std::endl;
+		}
+	}
 };
 
 
@@ -62,12 +85,14 @@ int main() {
 	//ImageHist.showHistorgam();
 	ImageHist.searchLocalMax();
 	ImageHist.printLocalMax();
+	ImageHist.searchLocalMin();
+	ImageHist.printLocalMin();
 
 	exit(0);
 }
 
 int calcIntensity(cv::Vec3b &pixel) {
-	int tmp = (int)(pixel[0] * 0.184 + pixel[1] * 0.587 + pixel[2] * 0.299);
+	int tmp = (int)(pixel[0] * 0.299 + pixel[1] * 0.587 + pixel[2] * 0.184);
 	if (tmp < 0) tmp = 0;
 	if (tmp > 255) tmp = 255;
 	return(tmp);
