@@ -1,5 +1,3 @@
-
-
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <stdio.h>
@@ -20,21 +18,18 @@ int main() {
 
 	ImageHist.searchLocalMax();
 	ImageHist.printLocalMax();
-	
+
 	ImageHist.searchLocalMin();
 	ImageHist.printLocalMin();
 
 
-	
+
 	ImageHist.peakAnalyse();
 
 	ImageHist.segmentation();
 
 	ImageHist.showImage();
 	ImageHist.showHistorgam();
-	
+
 	exit(0);
 }
-
-
-
