@@ -1,4 +1,4 @@
-#include "opencv2/core/core.hpp"
+п»ї#include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <stdio.h>
 #include <iostream>
@@ -60,8 +60,8 @@ public:
 
 	void searchLocalMax()
 	{
-		// нужно избавиться от нулевых значений по краям гистграммы
-		// т.к. они могут повлиять на диапазоны пиков и на конечный результат
+		// РЅСѓР¶РЅРѕ РёР·Р±Р°РІРёС‚СЊСЃСЏ РѕС‚ РЅСѓР»РµРІС‹С… Р·РЅР°С‡РµРЅРёР№ РїРѕ РєСЂР°СЏРј РіРёСЃС‚РіСЂР°РјРјС‹
+		// С‚.Рє. РѕРЅРё РјРѕРіСѓС‚ РїРѕРІР»РёСЏС‚СЊ РЅР° РґРёР°РїР°Р·РѕРЅС‹ РїРёРєРѕРІ Рё РЅР° РєРѕРЅРµС‡РЅС‹Р№ СЂРµР·СѓР»СЊС‚Р°С‚
 		int l = 0, r = 255;
 		while (hist[l] == 0) l++;
 		while (hist[r] == 0) r--;
@@ -137,7 +137,7 @@ public:
 		return peakMesure;
 	}
 
-	void smooth(int numPasses) { // сглаживание (см. презентацию)
+	void smooth(int numPasses) { // СЃРіР»Р°Р¶РёРІР°РЅРёРµ (СЃРј. РїСЂРµР·РµРЅС‚Р°С†РёСЋ)
 		int newHist[256] = { };
 
 		for (int k = 0; k < numPasses; k++)
