@@ -2,6 +2,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 #include <iomanip>
 
 int calcIntensity(cv::Vec3b &pixel);
@@ -9,7 +10,8 @@ void showImage(cv::Mat* image);
 
 class Histogram {
 public:
-	int hist[255];
+	int hist[256];
+	std::vector<int> vec;
 	Histogram(cv::Mat* image) {
 		for (int i = 0; i < 254; i++) { hist[i] = 0; }
 		for (int i = 0; i < image->cols; i++) {
@@ -22,26 +24,46 @@ public:
 	}
 	void showHistorgam() {
 		int hist_w = 300;
-		int hist_h = 100;
+		int hist_h = 200;
 		int histSize = 255;
 
 		cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));
 		for (int i = 0; i < histSize - 1; i++){
-			line(histImage, cv::Point(i, hist_h), cv::Point(i, hist_h - hist[i] / hist_h), cv::Scalar(255, 255, 255), 1, 8, 0);
+			line(histImage, cv::Point(i, hist_h), cv::Point(i, hist_h - hist[i] / histSize), cv::Scalar(255, 255, 255), 1, 8, 0);
 		}
 		showImage(&histImage);
 	}
+	void searchLocalMax(){
+		if (hist[0]>hist[1])
+			vec.push_back(hist[0]);
+		for (int i = 1; i < 255; i++){
+			if (hist[i]>hist[i - 1] && hist[i]>hist[i + 1])
+				vec.push_back(hist[i]);
+		}
+		if (hist[255] > hist[254])
+			vec.push_back(hist[255]);
+	}
+	void printLocalMax(){
+		for (int i : vec){
+			std::cout<< i << std::endl;
+		}
+	}
+	
 };
 
 
 
 int main() {
 	cv::Mat image;
-	std::string filename = "E:/! Important/! Other information/THE CHOICE/SUKHAN AUTUMN 2016/899898.PNG";
+	std::string filename = "test_Image.jpg";
 	image = cv::imread(filename);
 	//showImage(&image);
 	Histogram ImageHist(&image);
-	ImageHist.showHistorgam();
+	//ImageHist.showHistorgam();
+	ImageHist.searchLocalMax();
+	ImageHist.printLocalMax();
+
+	exit(0);
 }
 
 int calcIntensity(cv::Vec3b &pixel) {
