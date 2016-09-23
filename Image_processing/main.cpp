@@ -3,8 +3,11 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <ctime>
 #include <iomanip>
+
 #define THRESHOLD 0.5
+#define lowPoint 7000
 
 /*
 TODO:
@@ -23,6 +26,8 @@ public:
 	int hist[256];
 	std::vector<int> vecMax;
 	std::vector<int> vecMin;
+
+	std::vector<int> intervals;
 
 	Histogram(cv::Mat* image) {
 		for (int i = 0; i < 254; i++) { hist[i] = 0; }
@@ -119,30 +124,33 @@ public:
 
 	void peakAnalyse() {
 		double measure = 0.0;
-		for (int i = 0; i < vecMax.size() - 1; i++) {
+		for (int i = 0; i < vecMax.size(); i++) {
 			if (calculatePeakMeasure(vecMax[i]) < THRESHOLD) {
-				if (vecMax[i] == 0) {
-					for (int i = 0; i < vecMin[0]; i++) {
-						hist[i] = 0;
-					}
-				}
-				if (vecMax[i] == 255) {
-					for (int i = vecMin[vecMin.size() - 1] + 1; i <= 255; i++) {
-						hist[i] = 0;
-					}
-				}
-				if (vecMax[i] > 0 && vecMax[i] < 255) {
-					int leftMin = 0;
-					int rightMin = 0;
-					while (vecMax[i] > vecMin[leftMin + 1]) {
-						leftMin++;
-					}
-					rightMin = leftMin + 1;
-					for (int i = vecMin[leftMin] + 1; i < vecMin[rightMin]; i++) {
-						hist[i] = 0;
-					}
-				}
+				vecMax.erase(vecMax.begin()+i);
 			}
+		}
+
+		for (int i = 0; i < vecMax.size()-1; i++){
+			int minI = vecMax[i];
+			for (int j = vecMax[i]; j < vecMax[i + 1]; j++){
+				if (hist[minI] > hist[j])
+					minI = j;
+			}
+			intervals.push_back(minI);
+		}
+	}
+
+	void smooth(int numPasses) { // сглаживание (см. презентацию)
+		int newHist[256] = {};
+
+		for (int k = 0; k < numPasses; k++)
+		{
+			for (int i = 1; i < 255; i++) {
+				newHist[i] = (hist[i - 1] + hist[i] + hist[i + 1]) / 3;
+			}
+			newHist[0] = (hist[0] + hist[1]) / 2;
+			newHist[255] = (hist[254] + hist[255]) / 2;
+			memcpy(hist, newHist, 256 * sizeof(int));
 		}
 	}
 };
@@ -150,26 +158,56 @@ public:
 
 
 int main() {
+
+
 	cv::Mat image;
 	std::string filename = "test_Image.jpg";
 	image = cv::imread(filename);
-	//showImage(&image);
 	Histogram ImageHist(&image);
-	//ImageHist.showHistorgam();
+
+	ImageHist.smooth(5);
+
 	ImageHist.searchLocalMax();
 	ImageHist.printLocalMax();
+	
 	ImageHist.searchLocalMin();
 	ImageHist.printLocalMin();
-	std::cout << "VECMAX SIZE: " << ImageHist.vecMax.size() << std::endl;
-	for (int i = 0; i < ImageHist.vecMax.size(); i++) {
-		double tmp = ImageHist.calculatePeakMeasure(ImageHist.vecMax[i]);
-		std::cout << "PEAKMESURE OF " << i << " MAX: "<< std::setprecision(1) << tmp << std::endl;
-	}
-	ImageHist.showHistorgam();
+
+
+	
 	ImageHist.peakAnalyse();
-	ImageHist.showHistorgam();
+	srand(time(NULL));
+	std::vector<cv::Vec3b> colors;
+	for (int i = 0; i < ImageHist.intervals.size(); i++){
+		
+		cv::Vec3b p;
+		p[0] = rand() % 255;
+		p[1] = rand() % 255;
+		p[1] = rand() % 255;
+		colors.push_back(p);
+	}
+
+	for (int i = 0; i < image.cols; i++) {
+		for (int j = 0; j < image.rows; j++) {
+			cv::Vec3b pixColor = image.at<cv::Vec3b>(cv::Point(i, j));
+
+			int intensity = calculateIntensity(pixColor);
+			int k;
+			for (k = 0; k < ImageHist.intervals.size() - 1; k++){
+				if (intensity > ImageHist.intervals[k] && intensity < ImageHist.intervals[k + 1]){
+					break;
+				}
+			}
+			image.at<cv::Vec3b>(cv::Point(i, j)) = colors[k];
+		}
+	}
+
+	showImage(&image);
+	
 	exit(0);
 }
+
+
 
 int calculateIntensity(cv::Vec3b &pixel) {
 	int tmp = (int)(pixel[0] * 0.299 + pixel[1] * 0.587 + pixel[2] * 0.184);
