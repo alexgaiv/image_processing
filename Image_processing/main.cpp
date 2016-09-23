@@ -59,7 +59,7 @@ int main() {
 	image = cv::imread(filename);
 	//showImage(&image);
 	Histogram ImageHist(&image);
-	//ImageHist.showHistorgam();
+	ImageHist.showHistorgam();
 	ImageHist.searchLocalMax();
 	ImageHist.printLocalMax();
 
@@ -67,7 +67,7 @@ int main() {
 }
 
 int calcIntensity(cv::Vec3b &pixel) {
-	int tmp = (int)(pixel[0] * 0.184 + pixel[1] * 0.587 + pixel[2] * 0.299);
+	int tmp = (int)(pixel[0] *0.299 +pixel[1] * 0.587 + pixel[2] * 0.184);
 	if (tmp < 0) tmp = 0;
 	if (tmp > 255) tmp = 255;
 	return(tmp);
