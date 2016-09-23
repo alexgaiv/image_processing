@@ -7,7 +7,6 @@
 #include <iomanip>
 
 #define THRESHOLD 0.5
-#define lowPoint 7000
 
 /*
 TODO:
@@ -18,7 +17,7 @@ TODO:
 */
 
 
-int calculateIntensity(cv::Vec3b &pixel);
+uchar calculateIntensity(cv::Vec3b &pixel);
 void showImage(cv::Mat* image);
 
 class Histogram {
@@ -29,20 +28,19 @@ public:
 
 	std::vector<int> intervals;
 
-	Histogram(cv::Mat* image) {
+	Histogram(const cv::Mat &image) {
 		for (int i = 0; i < 254; i++) { hist[i] = 0; }
-		for (int i = 0; i < image->cols; i++) {
-			for (int j = 0; j < image->rows; j++) {
-				cv::Vec3b pixColor = image->at<cv::Vec3b>(cv::Point(i, j));
+		for (int i = 0; i < image.cols; i++) {
+			for (int j = 0; j < image.rows; j++) {
+				cv::Vec3b pixColor = image.at<cv::Vec3b>(cv::Point(i, j));
 				int intensity = calculateIntensity(pixColor);
 				hist[intensity]++;
 			}
 		}
 	}
 
-	~Histogram() {
+	~Histogram() { }
 
-	}
 	void showHistorgam() const {
 		int hist_w = 300;
 		int hist_h = 200;
@@ -56,14 +54,19 @@ public:
 	}
 
 	void searchLocalMax() {
-		if (hist[0] > hist[1])
-			vecMax.push_back(0);
+		int l = 0, r = 255;
+		while (hist[l] == 0) l++;
+		while (hist[r] == 0) r--;
+		if (hist[l] > hist[l + 1])
+			vecMax.push_back(l);
 		for (int i = 1; i < 255; i++) {
 			if (hist[i] > hist[i - 1] && hist[i] >= hist[i + 1])
 				vecMax.push_back(i);
 		}
 		if (hist[255] > hist[254])
 			vecMax.push_back(255);
+		if (hist[r] > hist[r - 1])
+			vecMax.push_back(r);
 	}
 
 	void printLocalMax() const {
@@ -74,14 +77,18 @@ public:
 	}
 	
 	void searchLocalMin() {
-		if (hist[0] < hist[1])
-			vecMin.push_back(0);
-		for (int i = 1; i < 255; i++) {
+		int l = 0, r = 255;
+		while (hist[l] == 0) l++;
+		while (hist[r] == 0) r--;
+		
+			if (hist[l] < hist[l + 1])
+			vecMin.push_back(l);
+		for (int i = l + 1; i < r - 1; i++) {
 			if (hist[i] < hist[i - 1] && hist[i] <= hist[i + 1])
 				vecMin.push_back(i);
 		}
-		if (hist[255] < hist[254])
-			vecMin.push_back(255);
+		if (hist[r] < hist[r - 1])
+			vecMin.push_back(r);
 	}
 
 	void printLocalMin() const {
@@ -98,13 +105,13 @@ public:
 			for (int i = peakNum; i <= vecMin[0]; i++) {
 				square += hist[i];
 			}
-			peakMesure = (1 - hist[vecMin[0]] / (2 * hist[peakNum]))*(1 - square / ((vecMin[0] - peakNum+1)*hist[peakNum]));
+			peakMesure = (1 - hist[vecMin[0]] / (2 * hist[peakNum]))*(1 - square / ((vecMin[0] - peakNum + 1)*hist[peakNum]));
 		}
 		if (peakNum == 255) {
 			for (int i = vecMin[vecMin.size() - 1]; i <= peakNum; i++) {
 				square += hist[i];
 			}
-			peakMesure = (1 - hist[vecMin[vecMin.size() - 1]] / (2 * hist[peakNum]))*(1 - square / ((peakNum - vecMin[vecMin.size() - 1]+1)*hist[peakNum]));
+			peakMesure = (1 - hist[vecMin[vecMin.size() - 1]] / (2 * hist[peakNum]))*(1 - square / ((peakNum - vecMin[vecMin.size() - 1] + 1)*hist[peakNum]));
 		}
 		if (peakNum > 0 && peakNum < 255) {
 			int leftMin = 0;
@@ -116,7 +123,7 @@ public:
 			for (int i = vecMin[leftMin]; i <= vecMin[rightMin]; i++) {
 				square += hist[i];
 			}
-			peakMesure = (1 - (hist[vecMin[leftMin]] + hist[vecMin[rightMin]]) / (2 * hist[peakNum]))*(1 - square / ((vecMin[rightMin] - vecMin[leftMin]+1)*hist[peakNum]));
+			peakMesure = (1 - (hist[vecMin[leftMin]] + hist[vecMin[rightMin]]) / (2 * hist[peakNum]))*(1 - square / ((vecMin[rightMin] - vecMin[leftMin] + 1)*hist[peakNum]));
 		}
 		std::setprecision(3);
 		return peakMesure;
@@ -140,7 +147,7 @@ public:
 		}
 	}
 
-	void smooth(int numPasses) { // сглаживание (см. презентацию)
+	void smooth(int numPasses) { 
 		int newHist[256] = {};
 
 		for (int k = 0; k < numPasses; k++)
@@ -163,7 +170,7 @@ int main() {
 	cv::Mat image;
 	std::string filename = "test_Image.jpg";
 	image = cv::imread(filename);
-	Histogram ImageHist(&image);
+	Histogram ImageHist(image);
 
 	ImageHist.smooth(5);
 
@@ -183,7 +190,7 @@ int main() {
 		cv::Vec3b p;
 		p[0] = rand() % 255;
 		p[1] = rand() % 255;
-		p[1] = rand() % 255;
+		p[2] = rand() % 255;
 		colors.push_back(p);
 	}
 
@@ -209,8 +216,8 @@ int main() {
 
 
 
-int calculateIntensity(cv::Vec3b &pixel) {
-	int tmp = (int)(pixel[0] * 0.299 + pixel[1] * 0.587 + pixel[2] * 0.184);
+uchar calculateIntensity(cv::Vec3b &pixel) {
+	uchar tmp = (int)(pixel[0] * 0.299 + pixel[1] * 0.587 + pixel[2] * 0.184);
 	if (tmp < 0) tmp = 0;
 	if (tmp > 255) tmp = 255;
 	return(tmp);
