@@ -7,7 +7,6 @@
 #include <iomanip>
 
 #define THRESHOLD 0.5
-#define lowPoint 7000
 
 /*
 TODO:
@@ -161,7 +160,7 @@ int main() {
 
 
 	cv::Mat image;
-	std::string filename = "test_Image.jpg";
+	std::string filename = "test_Image2.jpg";
 	image = cv::imread(filename);
 	Histogram ImageHist(&image);
 
