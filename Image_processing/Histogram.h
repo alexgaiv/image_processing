@@ -1,3 +1,7 @@
+/*
+THAT CODE WAS MADE BY POVELIKIN ROSTISLAV, GRECHUHIN NIKITA, GAIVAN'UK ALEXANDER
+*/
+
 #ifndef HISTOGRAM
 #define HISTOGRAM
 
@@ -11,9 +15,11 @@
 using namespace std;
 using namespace cv;
 
+//TODO: make a constructor with string of filename!
+
 #define THRESHOLD 0.5
 
-//Uchar is 0 to 255 range. That's the best to use for RGB model
+//Uchar is 0 to 255 range. That's the best to use RGB model
 uchar calculateIntensity(Vec3b &pixel);
 void showImage(Mat* image);
 
@@ -23,8 +29,10 @@ public:
 	vector<int> vecMax;
 	vector<int> vecMin;
 	vector<int> intervals;
-
-	Histogram(const Mat &image);
+	//pointer to the base image
+	Mat* imagePointer;
+	//can't send image with CONST because i want to save the pointer to that image in imagePointer variable
+	Histogram(Mat &image);
 
 	~Histogram() { }
 
@@ -38,11 +46,13 @@ public:
 
 	void printLocalMin() const;
 
-	double calculatePeakMeasure(int &peakNum) const;
+	float calculatePeakMeasure(int &peakNum) const;
 
 	void peakAnalyse();
 
-	void smooth(int numPasses);
+	void smooth(const int &numPasses);
+
+	void segmentation();
 };
 
 #endif 

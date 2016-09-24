@@ -1,6 +1,6 @@
 #include "Histogram.h"
 
-Histogram::Histogram(const Mat &image) {
+Histogram::Histogram(Mat &image) {
 	for (int i = 0; i < 254; i++) { hist[i] = 0; }
 	for (int i = 0; i < image.cols; i++) {
 		for (int j = 0; j < image.rows; j++) {
@@ -9,6 +9,7 @@ Histogram::Histogram(const Mat &image) {
 			hist[intensity]++;
 		}
 	}
+	imagePointer = &image;
 }
 
 void Histogram::showHistorgam() const {
@@ -68,7 +69,7 @@ void Histogram::printLocalMin() const {
 	}
 }
 
-double Histogram::calculatePeakMeasure(int &peakNum) const {
+float Histogram::calculatePeakMeasure(int &peakNum) const {
 	double peakMesure = 0.0;
 	double square = 0.0;
 	if (peakNum == 0) {
@@ -117,7 +118,7 @@ void Histogram::peakAnalyse() {
 	}
 }
 
-void Histogram::smooth(int numPasses) {
+void Histogram::smooth(const int &numPasses) {
 	int newHist[256] = {};
 
 	for (int k = 0; k < numPasses; k++)
@@ -128,5 +129,33 @@ void Histogram::smooth(int numPasses) {
 		newHist[0] = (hist[0] + hist[1]) / 2;
 		newHist[255] = (hist[254] + hist[255]) / 2;
 		memcpy(hist, newHist, 256 * sizeof(int));
+	}
+}
+
+void Histogram::segmentation() {
+	srand(time(NULL));
+	vector<Vec3b> colors;
+	for (int i = 0; i < intervals.size(); i++) {
+
+		Vec3b p;
+		p[0] = rand() % 255;
+		p[1] = rand() % 255;
+		p[2] = rand() % 255;
+		colors.push_back(p);
+	}
+
+	for (int i = 0; i < imagePointer->cols; i++) {
+		for (int j = 0; j < imagePointer->rows; j++) {
+			Vec3b pixColor = imagePointer->at<Vec3b>(Point(i, j));
+
+			int intensity = calculateIntensity(pixColor);
+			int k;
+			for (k = 0; k < intervals.size() - 1; k++) {
+				if (intensity > intervals[k] && intensity < intervals[k + 1]) {
+					break;
+				}
+			}
+			imagePointer->at<Vec3b>(Point(i, j)) = colors[k];
+		}
 	}
 }

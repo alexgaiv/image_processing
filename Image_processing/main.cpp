@@ -1,6 +1,4 @@
-/*
-THAT CODE WAS MADE BY POVELIKIN ROSTISLAV, GRECHUHIN NIKITA, GAIVAN'UK ALEXANDER
-*/
+
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -15,7 +13,7 @@ using namespace cv;
 
 int main() {
 	Mat image;
-	std::string filename = "test_Image.jpg";
+	string filename = "test_Image.jpg";
 	image = imread(filename);
 	Histogram ImageHist(image);
 
@@ -30,31 +28,8 @@ int main() {
 
 	
 	ImageHist.peakAnalyse();
-	srand(time(NULL));
-	std::vector<Vec3b> colors;
-	for (int i = 0; i < ImageHist.intervals.size(); i++){
-		
-		Vec3b p;
-		p[0] = rand() % 255;
-		p[1] = rand() % 255;
-		p[2] = rand() % 255;
-		colors.push_back(p);
-	}
 
-	for (int i = 0; i < image.cols; i++) {
-		for (int j = 0; j < image.rows; j++) {
-			Vec3b pixColor = image.at<Vec3b>(Point(i, j));
-
-			int intensity = calculateIntensity(pixColor);
-			int k;
-			for (k = 0; k < ImageHist.intervals.size() - 1; k++){
-				if (intensity > ImageHist.intervals[k] && intensity < ImageHist.intervals[k + 1]){
-					break;
-				}
-			}
-			image.at<Vec3b>(Point(i, j)) = colors[k];
-		}
-	}
+	ImageHist.segmentation();
 
 	showImage(&image);
 	
