@@ -21,20 +21,19 @@ using namespace cv;
 
 //Uchar is 0 to 255 range. That's the best to use RGB model
 uchar calculateIntensity(Vec3b &pixel);
-void showImage(Mat* image);
 
 class Histogram {
-public:
 	int hist[256];
 	vector<int> vecMax;
 	vector<int> vecMin;
 	vector<int> intervals;
-	//pointer to the base image
-	Mat* imagePointer;
-	//can't send image with CONST because i want to save the pointer to that image in imagePointer variable
-	Histogram(Mat &image);
+	Mat image;
+public:
+	Histogram(string &filename);
 
 	~Histogram() { }
+
+	void showImage() const;
 
 	void showHistorgam() const;
 

@@ -14,8 +14,7 @@ using namespace cv;
 int main() {
 	Mat image;
 	string filename = "test_Image.jpg";
-	image = imread(filename);
-	Histogram ImageHist(image);
+	Histogram ImageHist(filename);
 
 	ImageHist.smooth(5);
 
@@ -31,23 +30,10 @@ int main() {
 
 	ImageHist.segmentation();
 
-	showImage(&image);
+	ImageHist.showImage();
 	
 	exit(0);
 }
 
 
 
-uchar calculateIntensity(Vec3b &pixel) {
-	uchar tmp = (int)(pixel[0] * 0.299 + pixel[1] * 0.587 + pixel[2] * 0.184);
-	if (tmp < 0) tmp = 0;
-	if (tmp > 255) tmp = 255;
-	return(tmp);
-}
-
-void showImage(Mat* image) {
-	static char windowname[] = "Show";
-	imshow(windowname, *image);
-	cvWaitKey();
-	return;
-}

@@ -1,7 +1,22 @@
 #include "Histogram.h"
 
-Histogram::Histogram(Mat &image) {
-	for (int i = 0; i < 254; i++) { hist[i] = 0; }
+uchar calculateIntensity(Vec3b &pixel) {
+	uchar tmp = (int)(pixel[0] * 0.299 + pixel[1] * 0.587 + pixel[2] * 0.184);
+	if (tmp < 0) tmp = 0;
+	if (tmp > 255) tmp = 255;
+	return(tmp);
+}
+
+void Histogram::showImage() const {
+	static char windowname[] = "Show";
+	imshow(windowname, image);
+	cvWaitKey();
+	return;
+}
+
+Histogram::Histogram(string &filename) {
+	image = imread(filename);
+	for (int i = 0; i < 256; i++) { hist[i] = 0; }
 	for (int i = 0; i < image.cols; i++) {
 		for (int j = 0; j < image.rows; j++) {
 			Vec3b pixColor = image.at<Vec3b>(Point(i, j));
@@ -9,7 +24,6 @@ Histogram::Histogram(Mat &image) {
 			hist[intensity]++;
 		}
 	}
-	imagePointer = &image;
 }
 
 void Histogram::showHistorgam() const {
@@ -21,7 +35,7 @@ void Histogram::showHistorgam() const {
 	for (int i = 0; i < histSize - 1; i++) {
 		line(histImage, Point(i, hist_h), Point(i, hist_h - hist[i] / histSize), Scalar(255, 255, 255), 1, 8, 0);
 	}
-	showImage(&histImage);
+	this->showImage();
 }
 
 void Histogram::searchLocalMax() {
@@ -144,9 +158,9 @@ void Histogram::segmentation() {
 		colors.push_back(p);
 	}
 
-	for (int i = 0; i < imagePointer->cols; i++) {
-		for (int j = 0; j < imagePointer->rows; j++) {
-			Vec3b pixColor = imagePointer->at<Vec3b>(Point(i, j));
+	for (int i = 0; i < image.cols; i++) {
+		for (int j = 0; j < image.rows; j++) {
+			Vec3b pixColor = image.at<Vec3b>(Point(i, j));
 
 			int intensity = calculateIntensity(pixColor);
 			int k;
@@ -155,7 +169,7 @@ void Histogram::segmentation() {
 					break;
 				}
 			}
-			imagePointer->at<Vec3b>(Point(i, j)) = colors[k];
+			image.at<Vec3b>(Point(i, j)) = colors[k];
 		}
 	}
 }
