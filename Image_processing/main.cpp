@@ -1,3 +1,5 @@
+
+
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <stdio.h>
@@ -5,6 +7,7 @@
 #include <vector>
 #include <ctime>
 #include <iomanip>
+<<<<<<< HEAD
 
 #define THRESHOLD 0.5
 
@@ -163,6 +166,16 @@ int main() {
 	std::string filename = "test_Image2.jpg";
 	image = cv::imread(filename);
 	Histogram ImageHist(&image);
+=======
+#include "Histogram.h"
+using namespace std;
+using namespace cv;
+
+int main() {
+	Mat image;
+	string filename = "test_Image.jpg";
+	Histogram ImageHist(filename);
+>>>>>>> refs/remotes/PovelikinRostislav/master
 
 	ImageHist.smooth(5);
 
@@ -175,49 +188,14 @@ int main() {
 
 	
 	ImageHist.peakAnalyse();
-	srand(time(NULL));
-	std::vector<cv::Vec3b> colors;
-	for (int i = 0; i < ImageHist.intervals.size(); i++){
-		
-		cv::Vec3b p;
-		p[0] = rand() % 255;
-		p[1] = rand() % 255;
-		p[1] = rand() % 255;
-		colors.push_back(p);
-	}
 
-	for (int i = 0; i < image.cols; i++) {
-		for (int j = 0; j < image.rows; j++) {
-			cv::Vec3b pixColor = image.at<cv::Vec3b>(cv::Point(i, j));
+	ImageHist.segmentation();
 
-			int intensity = calculateIntensity(pixColor);
-			int k;
-			for (k = 0; k < ImageHist.intervals.size() - 1; k++){
-				if (intensity > ImageHist.intervals[k] && intensity < ImageHist.intervals[k + 1]){
-					break;
-				}
-			}
-			image.at<cv::Vec3b>(cv::Point(i, j)) = colors[k];
-		}
-	}
-
-	showImage(&image);
+	ImageHist.showImage();
+	ImageHist.showHistorgam();
 	
 	exit(0);
 }
 
 
 
-int calculateIntensity(cv::Vec3b &pixel) {
-	int tmp = (int)(pixel[0] * 0.299 + pixel[1] * 0.587 + pixel[2] * 0.184);
-	if (tmp < 0) tmp = 0;
-	if (tmp > 255) tmp = 255;
-	return(tmp);
-}
-
-void showImage(cv::Mat* image) {
-	static char windowname[] = "Show";
-	cv::imshow(windowname, *image);
-	cvWaitKey();
-	return;
-}
