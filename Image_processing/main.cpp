@@ -31,6 +31,7 @@ int main() {
 	ImageHist.segmentation();
 
 	ImageHist.showImage();
+	ImageHist.showHistorgam();
 	
 	exit(0);
 }
