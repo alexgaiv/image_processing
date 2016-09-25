@@ -35,8 +35,8 @@ void Histogram::showHistorgam() const {
 	for (int i = 0; i < histSize - 1; i++) {
 		line(histImage, Point(i, hist_h), Point(i, hist_h - hist[i] / histSize), Scalar(255, 255, 255), 1, 8, 0);
 	}
-	//MISTAKE. SHOW HISTOGRAM. NOT IMAGE!!!!
-	this->showImage();
+	imshow("Histohram", histImage);
+	cvWaitKey();
 }
 
 void Histogram::searchLocalMax() {
