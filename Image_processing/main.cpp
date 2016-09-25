@@ -9,10 +9,11 @@
 using namespace std;
 using namespace cv;
 
-int main() {
+int main() { 
 	Mat image;
 	string filename = "test_Image.jpg";
-	Histogram ImageHist(filename);
+	image = imread(filename);
+	Histogram ImageHist(image);
 
 	ImageHist.smooth(5);
 
