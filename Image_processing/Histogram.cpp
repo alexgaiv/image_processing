@@ -14,12 +14,12 @@ void Histogram::showImage() const {
 	return;
 }
 
-Histogram::Histogram(string &filename) {
-	image = imread(filename);
+Histogram::Histogram(Mat &image) {
+	this->image = image;
 	for (int i = 0; i < 256; i++) { hist[i] = 0; }
-	for (int i = 0; i < image.cols; i++) {
-		for (int j = 0; j < image.rows; j++) {
-			Vec3b pixColor = image.at<Vec3b>(Point(i, j));
+	for (int i = 0; i < this->image.cols; i++) {
+		for (int j = 0; j < this->image.rows; j++) {
+			Vec3b pixColor = this->image.at<Vec3b>(Point(i, j));
 			int intensity = calculateIntensity(pixColor);
 			hist[intensity]++;
 		}

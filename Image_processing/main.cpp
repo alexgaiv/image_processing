@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #include "opencv2/core/core.hpp"
+=======
+﻿#include "opencv2/core/core.hpp"
+>>>>>>> PovelikinRostislav/master
 #include "opencv2/highgui/highgui.hpp"
 #include <stdio.h>
 #include <iostream>
@@ -9,10 +13,11 @@
 using namespace std;
 using namespace cv;
 
-int main() {
+int main() { 
 	Mat image;
 	string filename = "test_Image.jpg";
-	Histogram ImageHist(filename);
+	image = imread(filename);
+	Histogram ImageHist(image);
 
 	ImageHist.smooth(5);
 
