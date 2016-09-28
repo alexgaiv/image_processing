@@ -6,21 +6,41 @@
 #include <ctime>
 #include <iomanip>
 #include "Histogram.h"
+#include "watershed.h"
+
 using namespace std;
 using namespace cv;
 
-int main() { 
+int main() {
+
+	Mat image = imread("test_Image3.png");
+	if (!image.data) return false;
+
+	Watershed watershed;
+	Mat result = watershed.processImage(image, 3, 12);
+	imshow("Result", result);
+	cvWaitKey();
+
+	/*
 	Mat image;
 	string filename = "test_Image.jpg";
-	image = imread(filename);
-	Histogram ImageHist(image);
+	Histogram ImageHist(filename);
+
 	ImageHist.smooth(5);
+
 	ImageHist.searchLocalMax();
 	ImageHist.printLocalMax();
+
 	ImageHist.searchLocalMin();
 	ImageHist.printLocalMin();
+
 	ImageHist.peakAnalyse();
+
 	ImageHist.segmentation();
+
+	ImageHist.showImage();
 	ImageHist.showHistorgam();
-	exit(0);
+	*/
+
+	return 0;
 }
