@@ -1,4 +1,4 @@
-﻿#include "opencv2/core/core.hpp"
+#include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <stdio.h>
 #include <iostream>
@@ -6,10 +6,24 @@
 #include <ctime>
 #include <iomanip>
 #include "Histogram.h"
+#include "watershed.h"
 using namespace std;
 using namespace cv;
 
 int main() {
+
+	Mat image = imread("test_Image3.png");
+	cvtColor(image, image, CV_BGR2GRAY);
+	/* todo:
+	compute image gradient
+	compute final segmented image from WatershedStructure::pixels
+	understand the algorithm
+	*/
+
+	WatershedAlgorithm watershed;
+	watershed.run(image);
+
+	/*
 	Mat image;
 	string filename = "test_Image.jpg";
 	Histogram ImageHist(filename);
@@ -30,6 +44,7 @@ int main() {
 
 	ImageHist.showImage();
 	ImageHist.showHistorgam();
+	*/
 
-	exit(0);
+	return 0;
 }
