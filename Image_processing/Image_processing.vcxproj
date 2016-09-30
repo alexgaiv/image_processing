@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Histogram.h" />
+    <ClInclude Include="Watershed.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{154E78AF-96D6-4E5E-BC78-BAB24216495C}</ProjectGuid>

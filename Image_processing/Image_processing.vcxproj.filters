@@ -26,5 +26,8 @@
     <ClInclude Include="Histogram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Watershed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
