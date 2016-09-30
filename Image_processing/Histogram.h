@@ -29,7 +29,7 @@ class Histogram {
 	vector<int> intervals;
 	Mat image;
 public:
-	Histogram(string &filename);
+	Histogram(Mat &image);
 
 	~Histogram() { }
 

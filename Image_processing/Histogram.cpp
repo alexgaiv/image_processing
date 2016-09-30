@@ -14,12 +14,12 @@ void Histogram::showImage() const {
 	return;
 }
 
-Histogram::Histogram(string &filename) {
-	image = imread(filename);
+Histogram::Histogram(Mat &image) {
+	this->image = image;
 	for (int i = 0; i < 256; i++) { hist[i] = 0; }
-	for (int i = 0; i < image.cols; i++) {
-		for (int j = 0; j < image.rows; j++) {
-			Vec3b pixColor = image.at<Vec3b>(Point(i, j));
+	for (int i = 0; i < this->image.cols; i++) {
+		for (int j = 0; j < this->image.rows; j++) {
+			Vec3b pixColor = this->image.at<Vec3b>(Point(i, j));
 			int intensity = calculateIntensity(pixColor);
 			hist[intensity]++;
 		}
@@ -35,8 +35,8 @@ void Histogram::showHistorgam() const {
 	for (int i = 0; i < histSize - 1; i++) {
 		line(histImage, Point(i, hist_h), Point(i, hist_h - hist[i] / histSize), Scalar(255, 255, 255), 1, 8, 0);
 	}
-	//MISTAKE. SHOW HISTOGRAM. NOT IMAGE!!!!
-	this->showImage();
+	imshow("Histohram", histImage);
+	cvWaitKey();
 }
 
 void Histogram::searchLocalMax() {
@@ -134,7 +134,7 @@ void Histogram::peakAnalyse() {
 }
 
 void Histogram::smooth(const int &numPasses) {
-	int newHist[256] = {};
+	int newHist[256] = { };
 
 	for (int k = 0; k < numPasses; k++)
 	{
