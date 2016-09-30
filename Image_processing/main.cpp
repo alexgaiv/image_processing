@@ -12,7 +12,6 @@ using namespace std;
 using namespace cv;
 
 int main() {
-
 	Mat image = imread("test_Image3.png");
 	if (!image.data) return false;
 
