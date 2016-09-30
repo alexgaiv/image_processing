@@ -7,21 +7,19 @@
 #include <iomanip>
 #include "Histogram.h"
 #include "watershed.h"
+
 using namespace std;
 using namespace cv;
 
 int main() {
 
 	Mat image = imread("test_Image3.png");
-	cvtColor(image, image, CV_BGR2GRAY);
-	/* todo:
-	compute image gradient
-	compute final segmented image from WatershedStructure::pixels
-	understand the algorithm
-	*/
+	if (!image.data) return false;
 
-	WatershedAlgorithm watershed;
-	watershed.run(image);
+	Watershed watershed;
+	Mat result = watershed.processImage(image, 3, 12);
+	imshow("Result", result);
+	cvWaitKey();
 
 	/*
 	Mat image;
@@ -35,8 +33,6 @@ int main() {
 
 	ImageHist.searchLocalMin();
 	ImageHist.printLocalMin();
-
-
 
 	ImageHist.peakAnalyse();
 
