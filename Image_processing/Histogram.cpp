@@ -134,7 +134,7 @@ void Histogram::peakAnalyse() {
 }
 
 void Histogram::smooth(const int &numPasses) {
-	int newHist[256] = {};
+	int newHist[256] = { };
 
 	for (int k = 0; k < numPasses; k++)
 	{
