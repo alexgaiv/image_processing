@@ -10,7 +10,7 @@
 #include <ctime>
 #include <iomanip>
 #include "Histogram.h"
-#include "Watershed.h"
+#include "WatershedTobogganing.h"
 using namespace std;
 using namespace cv;
 

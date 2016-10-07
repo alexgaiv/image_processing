@@ -26,7 +26,7 @@
     <ClInclude Include="Histogram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Watershed.h">
+    <ClInclude Include="WatershedTobogganing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
