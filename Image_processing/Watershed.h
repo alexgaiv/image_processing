@@ -23,6 +23,7 @@ public:
 	int x;
 	int y;
 	Vec3b min;
+	Vec3b color;
 };
 
 class Watershed{
@@ -37,9 +38,9 @@ public:
 		segments = new PointWithMin[(*image).cols*(*image).rows];
 		for (int i = 0; i < 256; i++){
 			Vec3b p;
-			p[0] = rand() % 256;
-			p[1] = rand() % 256;
-			p[2] = rand() % 256;
+			p[0] = i;
+			p[1] = (256 - i) % 256;
+			p[2] = (i*2) % 256;
 			colors.push_back(p);
 		}
 	}
@@ -104,13 +105,14 @@ public:
 				segments[amount].x = i;
 				segments[amount].y = j;
 				segments[amount].min = pix;
+				segments[amount].color = colors[calculateIntensity(pix)];
 				amount++;
 			}
 		}
 
 		for (int i = 0; i < amount; i++){
 			Point point(segments[i].x, segments[i].y);
-			image.at<Vec3b>(point) = colors[calculateIntensity(segments[i].min)];
+			image.at<Vec3b>(point) = segments[i].color;
 		}
 
 		return;

@@ -16,11 +16,12 @@ using namespace cv;
 
 int main() { 
 	Mat image;
-	string filename = "test_Image.jpg";
+	string filename = "test_Image3.jpg";
 	image = imread(filename);
 	Mat dst = image;
 	
-	//blur(image, dst, Size(1, 1));
+	//blur(image, dst, Size(3, 3));
+	//medianBlur(dst, dst, 3);
 	
 	Watershed watershed(&dst);
 
