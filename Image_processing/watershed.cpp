@@ -24,7 +24,7 @@ public:
 	static WatershedPixel fictPixel;
 
 	int x, y;
-	uchar height; // = intensity
+	uchar height; // == intensity
 
 	// ID of basin that pixel belongs to or one of the special values listed above
 	int label;
