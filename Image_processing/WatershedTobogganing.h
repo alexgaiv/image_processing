@@ -26,14 +26,14 @@ public:
 	Vec3b color;
 };
 
-class Watershed{
+class WatershedTobo{
 private:
 	Mat image;
 	PointWithMin *segments;
 	int rows;
 	vector<Vec3b> colors;
 public:
-	Watershed(Mat *image){
+	WatershedTobo(Mat *image){
 		this->image = *image;
 		segments = new PointWithMin[(*image).cols*(*image).rows];
 		for (int i = 0; i < 256; i++){
@@ -45,7 +45,7 @@ public:
 		}
 	}
 
-	~Watershed(){
+	~WatershedTobo(){
 		delete[]segments;
 	}
 
