@@ -16,7 +16,7 @@ using namespace cv;
 
 int main() { 
 	Mat image;
-	string filename = "test_Image3.jpg";
+	string filename = "4.2.07.jpg";
 	image = imread(filename);
 	Mat dst = image;
 	
