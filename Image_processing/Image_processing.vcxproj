@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Histogram.h" />
+    <ClInclude Include="WatershedTobogganing.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{154E78AF-96D6-4E5E-BC78-BAB24216495C}</ProjectGuid>
@@ -49,7 +50,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
