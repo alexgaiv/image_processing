@@ -35,7 +35,6 @@ void Histogram::showHistorgam() const {
 	for (int i = 0; i < histSize - 1; i++) {
 		line(histImage, Point(i, hist_h), Point(i, hist_h - hist[i] / histSize), Scalar(255, 255, 255), 1, 8, 0);
 	}
-	//MISTAKE. SHOW HISTOGRAM. NOT IMAGE!!!!
 	imshow("Histohram", histImage);
 	cvWaitKey();
 }
@@ -135,7 +134,7 @@ void Histogram::peakAnalyse() {
 }
 
 void Histogram::smooth(const int &numPasses) {
-	int newHist[256] = {};
+	int newHist[256] = { };
 
 	for (int k = 0; k < numPasses; k++)
 	{

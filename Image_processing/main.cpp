@@ -11,26 +11,20 @@
 #include <iomanip>
 #include "Histogram.h"
 #include "WatershedTobogganing.h"
+
 using namespace std;
 using namespace cv;
 
-int main() { 
-	Mat image;
-	string filename = "4.2.07.jpg";
-	image = imread(filename);
-	Mat dst = image;
-	
-	//blur(image, dst, Size(3, 3));
-	//medianBlur(dst, dst, 3);
-	
-	Watershed watershed(&dst);
+int main() {
+	Mat image = imread("test_Image3.jpg");
 
+	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
+
+	Watershed watershed(&image);
 	watershed.segmentation();
-
-	static char windowname[] = "Show";
-	imshow(windowname, dst);
+	imshow("Result", image);
 	cvWaitKey();
 
-	exit(0);
+
 	return 0;
 }

@@ -244,3 +244,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+#USERS WISHES
+Image_processing/Image_processing.vcxproj
