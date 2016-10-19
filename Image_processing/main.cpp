@@ -11,20 +11,20 @@
 #include <iomanip>
 #include "Histogram.h"
 #include "WatershedTobogganing.h"
+#include "BiLinear.h"
 
 using namespace std;
 using namespace cv;
 
 int main() {
-	Mat image = imread("test_Image3.jpg");
+	Mat image = imread("test_Image.jpg");
+	imshow("in", image);
 
 	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
 
-	Watershed watershed(&image);
-	watershed.segmentation();
-	imshow("Result", image);
-	cvWaitKey();
-
+	Interpolation interpolation(&image);
+	interpolation.doInterpolation();
+	interpolation.showResult();
 
 	return 0;
 }
