@@ -22,8 +22,8 @@ int main() {
 
 	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
 
-	Interpolation interpolation(&image);
-	interpolation.doInterpolation();
+	Interpolation interpolation(&image, 3);
+	interpolation.resample();
 	interpolation.showResult();
 
 	return 0;
