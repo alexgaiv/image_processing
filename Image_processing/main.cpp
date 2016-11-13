@@ -13,6 +13,8 @@
 #include "WatershedTobogganing.h"
 #include "BiLinear.h"
 
+
+#include "ImageCompressor.h"
 #include "watershed.h"
 
 using namespace std;
@@ -30,12 +32,24 @@ int main() {
 	cvWaitKey();
 
 
+
 	Mat image = imread("test_Image.jpg");
 	imshow("in", image);
 
 	Interpolation interpolation(&image, 3);
 	interpolation.resample();
 	interpolation.showResult();
+
+	/*/
+	Watershed watershedVincentShoille;
+	Mat result = watershedVincentShoille.processImage(image, 3, 12);
+	imshow("Result", result);
+	cvWaitKey();
+	//*/
+	Mat image_compressor = imread("4.2.07.jpg");
+	imshow("in", image_compressor);
+	ImageCompressor c;
+	c.Compress(image_compressor);
 
 	return 0;
 }
