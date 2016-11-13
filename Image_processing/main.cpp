@@ -23,6 +23,7 @@ using namespace cv;
 int main() {
 
 
+
 	Mat image1 = imread("2.jpg");
 	imshow("first in", image1);
 
@@ -46,10 +47,22 @@ int main() {
 	imshow("Result", result);
 	cvWaitKey();
 	//*/
+	
+	
+	/*
+	Mat image_interpolation = imread("2.jpg");
+	if (!image_interpolation.data) return false;
+	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
+
+	Interpolation interpolation(&image_interpolation, 3);
+	interpolation.resample();
+	interpolation.showResult();
+	*/
+
 	Mat image_compressor = imread("4.2.07.jpg");
 	imshow("in", image_compressor);
 	ImageCompressor c;
 	c.Compress(image_compressor);
-
+	
 	return 0;
 }
