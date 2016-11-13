@@ -20,6 +20,7 @@ using namespace cv;
 
 int main() {
 
+
 	Mat image1 = imread("2.jpg");
 	imshow("first in", image1);
 
@@ -27,6 +28,14 @@ int main() {
 	watershed.segmentation();
 	imshow("Result", image1);
 	cvWaitKey();
+
+
+	Mat image = imread("test_Image.jpg");
+	imshow("in", image);
+
+	Interpolation interpolation(&image, 3);
+	interpolation.resample();
+	interpolation.showResult();
 
 	return 0;
 }
