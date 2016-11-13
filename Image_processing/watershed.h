@@ -6,7 +6,7 @@
 class Watershed {
 public:
 	cv::Mat processImage(const cv::Mat &image, int blurRadius = 0, int thresh = 0);
-private:
+//private:
 	cv::Mat preProccess(const cv::Mat &image, int blurRadius = 0, int thresh = 0);
 };
 
