@@ -18,9 +18,8 @@ using namespace std;
 using namespace cv;
 
 int main() {
-	Mat image = imread("test_Image.jpg");
-	if (!image.data) return false;
-	imshow("in", image);
+	
+	
 
 	Mat image_interpolation = imread("2.jpg");
 	if (!image_interpolation.data) return false;
@@ -30,6 +29,9 @@ int main() {
 	interpolation.resample();
 	interpolation.showResult();
 
+	Mat image = imread("2.jpg");
+	imshow("Input", image);
+	if (!image.data) return false;
 	//*
 	Watershed a;
 	//image = a.preProccess(image, 3, 12);
