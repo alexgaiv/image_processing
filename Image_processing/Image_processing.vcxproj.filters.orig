@@ -7,6 +7,9 @@
   </ItemGroup>
   <ItemGroup>
 <<<<<<< HEAD
+    <ClInclude Include="Histogram.h" />
+    <ClInclude Include="WatershedTobogganing.h" />
+=======
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -24,9 +27,6 @@
     <ClInclude Include="BiLinear.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-=======
-    <ClInclude Include="Histogram.h" />
-    <ClInclude Include="WatershedTobogganing.h" />
->>>>>>> refs/remotes/PovelikinRostislav/master
+>>>>>>> b35700df39c75a3e3bda0b869bdf6e8c3cd01bc7
   </ItemGroup>
 </Project>

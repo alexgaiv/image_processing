@@ -11,39 +11,17 @@
 #include <iomanip>
 #include "Histogram.h"
 #include "WatershedTobogganing.h"
-#include "BiLinear.h"
-
 #include "watershed.h"
->>>>>>> refs/remotes/PovelikinRostislav/master
+#include "BiLinear.h"
 
 using namespace std;
 using namespace cv;
 
 int main() {
-
-	Mat image = imread("test_Image.jpg");
-	imshow("in", image);
-
-	
-	
-
-	Mat image_interpolation = imread("2.jpg");
-	if (!image_interpolation.data) return false;
-	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
-
-	Interpolation interpolation(&image, 5);
-	interpolation.resample();
-	interpolation.showResult();
-
-	Interpolation interpolation(&image_interpolation, 3);
-	interpolation.resample();
-	interpolation.showResult();
-
 	Mat image = imread("2.jpg");
-	imshow("Input", image);
 	if (!image.data) return false;
+	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
 	//*
-	Watershed a;
 	//image = a.preProccess(image, 3, 12);
 	//cvtColor(image, image, CV_GRAY2RGB);
 	WatershedTobo watershed(&image);
@@ -56,5 +34,14 @@ int main() {
 	imshow("Result", result);
 	cvWaitKey();
 	//*/
+	Mat image_interpolation = imread("test_Image.jpg");
+	imshow("in", image_interpolation);
+
+	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
+
+	Interpolation interpolation(&image_interpolation, 3);
+	interpolation.resample();
+	interpolation.showResult();
+
 	return 0;
 }
