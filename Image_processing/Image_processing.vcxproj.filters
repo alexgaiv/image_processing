@@ -6,27 +6,8 @@
     <ClCompile Include="watershed.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Histogram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Histogram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WatershedTobogganing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BiLinear.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-=======
+    <ClInclude Include="BiLinear.h" />
     <ClInclude Include="Histogram.h" />
     <ClInclude Include="WatershedTobogganing.h" />
->>>>>>> refs/remotes/PovelikinRostislav/master
   </ItemGroup>
 </Project>
