@@ -22,7 +22,7 @@ int main() {
 
 	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
 
-	Interpolation interpolation(&image, 3);
+	Interpolation interpolation(&image, 5);
 	interpolation.resample();
 	interpolation.showResult();
 
