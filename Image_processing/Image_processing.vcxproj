@@ -25,6 +25,7 @@
     <ClCompile Include="watershed.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BiLinear.h" />
     <ClInclude Include="Histogram.h" />
     <ClInclude Include="ImageCompressor.h" />
     <ClInclude Include="WatershedTobogganing.h" />
@@ -53,7 +54,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>

@@ -15,6 +15,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <ClInclude Include="BiLinear.h" />
+    <ClInclude Include="Histogram.h" />
+    <ClInclude Include="WatershedTobogganing.h" />
+=======
     <ClInclude Include="Histogram.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -32,5 +37,6 @@
     <Filter Include="Src">
       <UniqueIdentifier>{06e47825-95d2-42aa-999b-8d68fd14671b}</UniqueIdentifier>
     </Filter>
+>>>>>>> db76ed3be7ba85d3f1d8b0dd6a932bc1f1a37b09
   </ItemGroup>
 </Project>

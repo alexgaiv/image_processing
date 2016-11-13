@@ -4,14 +4,14 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stdio.h>
 #include <iostream>
-#include <vector>
-#include <set>
 #include <cassert>
 #include <ctime>
 #include <iomanip>
 #include "Histogram.h"
 #include "WatershedTobogganing.h"
 #include "BiLinear.h"
+
+
 #include "ImageCompressor.h"
 #include "watershed.h"
 
@@ -19,21 +19,11 @@ using namespace std;
 using namespace cv;
 
 int main() {
-	
-	
-	/*
-	Mat image_interpolation = imread("2.jpg");
-	if (!image_interpolation.data) return false;
-	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
 
-	Interpolation interpolation(&image_interpolation, 3);
-	interpolation.resample();
-	interpolation.showResult();
-	*/
-	Mat image_compressor = imread("4.2.07.jpg");
+	Mat image_compressor = imread("1.jpg");
 	imshow("in", image_compressor);
 	ImageCompressor c;
 	c.Compress(image_compressor);
-	
+
 	return 0;
 }
