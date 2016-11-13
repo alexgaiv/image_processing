@@ -12,6 +12,7 @@
 #include "Histogram.h"
 #include "WatershedTobogganing.h"
 #include "BiLinear.h"
+#include "ImageCompressor.h"
 #include "watershed.h"
 
 using namespace std;
@@ -46,5 +47,10 @@ int main() {
 	imshow("Result", result);
 	cvWaitKey();
 	//*/
+	Mat image_compressor = imread("4.2.07.jpg");
+	imshow("in", image_compressor);
+	ImageCompressor c;
+	c.Compress(image_compressor);
+
 	return 0;
 }
