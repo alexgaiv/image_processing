@@ -6,6 +6,7 @@
     <ClCompile Include="watershed.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BiLinear.h" />
     <ClInclude Include="Histogram.h" />
     <ClInclude Include="WatershedTobogganing.h" />
   </ItemGroup>

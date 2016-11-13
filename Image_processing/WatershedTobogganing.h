@@ -32,15 +32,16 @@ private:
 	PointWithMin *segments;
 	int rows;
 	vector<Vec3b> colors;
+	vector<pair< Vec3b, Vec3b > > mins;
 public:
 	WatershedTobo(Mat *image){
 		this->image = *image;
 		segments = new PointWithMin[(*image).cols*(*image).rows];
 		for (int i = 0; i < 256; i++){
 			Vec3b p;
-			p[0] = i;
-			p[1] = (256 - i) % 256;
-			p[2] = (i*2) % 256;
+			p[0] = rand() % 256;
+			p[1] = rand() % 256;
+			p[2] = rand() % 256;
 			colors.push_back(p);
 		}
 	}
@@ -102,10 +103,27 @@ public:
 		for (int i = 0; i < image.cols; i++){
 			for (int j = 0; j < image.rows; j++){
 				Vec3b pix = searchMin(i, j);
+				Vec3b c;
+
+				bool found = false;
+				for (auto &it : mins)
+				{
+					if (it.first == pix) {
+						c = it.second;
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					c = Vec3b(rand() % 256, rand() % 256, rand() % 256);
+					auto p = make_pair(pix, c);
+					mins.push_back(p);
+				}
 				segments[amount].x = i;
 				segments[amount].y = j;
 				segments[amount].min = pix;
-				segments[amount].color = colors[calculateIntensity(pix)];
+				//segments[amount].color = colors[calculateIntensity(pix)];
+				segments[amount].color = c;
 				amount++;
 			}
 		}

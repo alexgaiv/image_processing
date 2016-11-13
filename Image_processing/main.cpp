@@ -11,23 +11,22 @@
 #include <iomanip>
 #include "Histogram.h"
 #include "WatershedTobogganing.h"
+#include "BiLinear.h"
+
 #include "watershed.h"
 
 using namespace std;
 using namespace cv;
 
 int main() {
-	Mat image = imread("test_Image3.jpg");
-	if (!image.data) return false;
-	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
 
-	WatershedTobo watershed(&image);
+	Mat image1 = imread("2.jpg");
+	imshow("first in", image1);
+
+	WatershedTobo watershed(&image1);
 	watershed.segmentation();
-	imshow("Result", image);
-
-	Watershed watershedVincentShoille;
-	Mat result = watershedVincentShoille.processImage(image, 3, 12);
-	imshow("Result", result);
+	imshow("Result", image1);
 	cvWaitKey();
+
 	return 0;
 }
