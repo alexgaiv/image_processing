@@ -10,11 +10,12 @@ class ImageCompressor
 {
 public:
 	Mat Compress(const Mat &image);
+
 private:
 	typedef Vec<char, 3> Vec3sb;
 
 	Mat inputImage;
-	Vec3sb minError, maxError, avgError;
+	Vec3sb avgError;
 
 	Mat Predict(const Mat &image);
 	Mat CalcError(const Mat &image);
