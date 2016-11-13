@@ -20,11 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Histogram.cpp" />
+    <ClCompile Include="ImageCompressor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="watershed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Histogram.h" />
+    <ClInclude Include="ImageCompressor.h" />
     <ClInclude Include="WatershedTobogganing.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

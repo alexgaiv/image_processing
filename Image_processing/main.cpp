@@ -21,7 +21,7 @@ using namespace cv;
 int main() {
 	
 	
-
+	/*
 	Mat image_interpolation = imread("2.jpg");
 	if (!image_interpolation.data) return false;
 	//blur(image, image, Size(3, 3), Point(-1, -1), 4);
@@ -29,28 +29,11 @@ int main() {
 	Interpolation interpolation(&image_interpolation, 3);
 	interpolation.resample();
 	interpolation.showResult();
-
-	Mat image = imread("2.jpg");
-	imshow("Input", image);
-	if (!image.data) return false;
-	//*
-	Watershed a;
-	//image = a.preProccess(image, 3, 12);
-	//cvtColor(image, image, CV_GRAY2RGB);
-	WatershedTobo watershed(&image);
-	watershed.segmentation();
-	imshow("Result", image);
-	cvWaitKey();
-	/*/
-	Watershed watershedVincentShoille;
-	Mat result = watershedVincentShoille.processImage(image, 3, 12);
-	imshow("Result", result);
-	cvWaitKey();
-	//*/
+	*/
 	Mat image_compressor = imread("4.2.07.jpg");
 	imshow("in", image_compressor);
 	ImageCompressor c;
 	c.Compress(image_compressor);
-
+	
 	return 0;
 }

@@ -1,5 +1,4 @@
 #include "ImageCompressor.h"
-#include "utils.h"
 #include <iostream>
 
 Mat ImageCompressor::Compress(const Mat &image)
