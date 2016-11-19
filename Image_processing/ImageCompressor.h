@@ -15,8 +15,9 @@ private:
 	typedef Vec<char, 3> Vec3sb;
 
 	Mat inputImage;
+	Vec3sb minError, maxError;
 	Vec3sb avgError;
-
+	Vec3sb interval;
 	Mat Predict(const Mat &image);
 	Mat CalcError(const Mat &image);
 	Mat Quantizate(const Mat &image);

@@ -1,42 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Histogram.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="watershed.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageCompressor.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
+    <ClCompile Include="Histogram.cpp" />
+    <ClCompile Include="ImageCompressor.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="watershed.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClInclude Include="BiLinear.h" />
     <ClInclude Include="Histogram.h" />
+    <ClInclude Include="ImageCompressor.h" />
     <ClInclude Include="WatershedTobogganing.h" />
-=======
-    <ClInclude Include="Histogram.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageCompressor.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="WatershedTobogganing.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{23610c93-7dd1-4225-aa26-5daf97496599}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src">
-      <UniqueIdentifier>{06e47825-95d2-42aa-999b-8d68fd14671b}</UniqueIdentifier>
-    </Filter>
->>>>>>> db76ed3be7ba85d3f1d8b0dd6a932bc1f1a37b09
   </ItemGroup>
 </Project>

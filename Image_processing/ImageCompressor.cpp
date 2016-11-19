@@ -43,7 +43,7 @@ Mat ImageCompressor::Predict(const Mat &image)
 Mat ImageCompressor::CalcError(const Mat &image)
 {
 	Mat result(Size(image.cols, image.rows), CV_8SC3);
-	Vec3sb minError, maxError;
+	
 
 	Vec3sb p1 = image.at<Vec3sb>(0, 0);
 	Vec3sb p2 = inputImage.at<Vec3sb>(0, 0);
@@ -59,28 +59,36 @@ Mat ImageCompressor::CalcError(const Mat &image)
 
 			Vec3sb err = Vec3sb(p1[0] - p2[0], p1[1] - p2[1], p1[2] - p2[2]);
 			result.at<Vec3sb>(j, i) = err;
-			//avgError += err;
+
 			for (int k = 0; k < 3; k++)
 			{
 				if (err[k] < minError[k])
 					minError[k] = err[k];
 				if (err[k] > maxError[k])
 					maxError[k] = err[k];
+				//cout << "ERROR[" << k << "] " << err << endl;
 			}
 		}
 	}
 
 	for (int k = 0; k < 3; k++)
 	{
-		avgError[k] = (minError[k] + maxError[k]) / 2;
-	}
+		//cout << "Min error " << (int) minError[k] << endl;
+		//cout << "Max error " << (int) maxError[k] << endl;
 
+		avgError[k] = (minError[k] + maxError[k]) / 2;
+		cout << "Avg Error " << (int) avgError[k] << endl;
+		cout << endl;
+	}
+	interval = maxError - minError;
 	return result;
 }
 
 Mat ImageCompressor::Quantizate(const Mat &image)
 {
 	Mat result(Size(image.cols, image.rows), CV_8SC3);
+
+
 
 	for (int i = 0; i < image.rows; i++)
 	{
@@ -89,15 +97,19 @@ Mat ImageCompressor::Quantizate(const Mat &image)
 			Vec3sb error = image.at<Vec3sb>(i, j);
 			for (int k = 0; k < 3; k++)
 			{
-				if (error[k] < -avgError[k] / 2)
-					result.at<Vec3sb>(i, j)[k] = -avgError[k];
-				if (error[k] >= avgError[k] / 2 && error[k] <= avgError[k] / 2)
-					result.at<Vec3sb>(i, j)[k] = 0;
-				if (error[k] > avgError[k] / 2)
-					result.at<Vec3sb>(i, j)[k] = avgError[k];
+				if (error[k] < (minError[k] + interval[k]/3))
+					result.at<Vec3sb>(i, j)[k] = (minError[k] + interval[k] / 3);
+				else
+					if (error[k] >= (minError[k] + interval[k] / 3) && error[k] <= (minError[k] + 2 * interval[k] / 3))
+						result.at<Vec3sb>(i, j)[k] = avgError[k];
+					else
+						result.at<Vec3sb>(i, j)[k] = (minError[k] + 2 * interval[k] / 3);
+
+				cout << result.at<Vec3sb>(i, j) << endl;
 			}
 		}
 	}
+
 	return result;
 }
 

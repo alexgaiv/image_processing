@@ -20,7 +20,7 @@ using namespace cv;
 
 int main() {
 
-	Mat image_compressor = imread("1.jpg");
+	Mat image_compressor = imread("test_Image3.jpg");
 	imshow("in", image_compressor);
 	ImageCompressor c;
 	c.Compress(image_compressor);
