@@ -77,10 +77,15 @@ Mat ImageCompressor::CalcError(const Mat &image)
 		//cout << "Max error " << (int) maxError[k] << endl;
 
 		avgError[k] = (minError[k] + maxError[k]) / 2;
-		cout << "Avg Error " << (int) avgError[k] << endl;
-		cout << endl;
+		
 	}
+	cout << "Avg Error " << avgError << endl;
+	cout << "Max Error " << maxError << endl;
+	cout << "Min Error " << minError << endl;
+
+	cout << endl;
 	interval = maxError - minError;
+	cout<< "Interval: " << interval << endl;
 	return result;
 }
 
@@ -105,10 +110,13 @@ Mat ImageCompressor::Quantizate(const Mat &image)
 					else
 						result.at<Vec3sb>(i, j)[k] = (minError[k] + 2 * interval[k] / 3);
 
-				cout << result.at<Vec3sb>(i, j) << endl;
 			}
+			cout << result.at<Vec3sb>(i, j) << endl;
 		}
 	}
+	cout << "LOWER AND HIGHER GATEWAYS " << minError[0] + interval[0] / 3 << " :: " << minError[0] + 2 * interval[0] / 3 << endl;
+	cout << "LOWER AND HIGHER GATEWAYS " << minError[1] + interval[1] / 3 << " :: " << minError[1] + 2 * interval[1] / 3 << endl;
+	cout << "LOWER AND HIGHER GATEWAYS " << minError[2] + interval[2] / 3 << " :: " << minError[2] + 2 * interval[2] / 3 << endl;
 
 	return result;
 }
