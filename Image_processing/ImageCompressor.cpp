@@ -12,28 +12,28 @@ Mat ImageCompressor::Predict(const Mat &image)
 {
 	Mat result(Size(image.cols, image.rows), image.type());
 
-	for (int j = 0; j < image.rows; j++)
+	for (int i = 0; i < image.rows; i++)
 	{
-		for (int i = 0; i < image.cols; i++)
+		for (int j = 0; j < image.cols; j++)
 		{
 			int i2, j2;
-			if (i == 0) {
-				i2 = image.cols - 1;
-				j2 = j - 1;
+			if (j == 0) {
+				i2 = i - 1;
+				j2 = image.cols - 1;
 			}
 			else {
-				i2 = i - 1;
-				j2 = j;
+				i2 = i;
+				j2 = j - 1;
 			}
 
 			Vec3b p1;
 			if (i2 > 0 && j2 > 0)
-				p1 = image.at<Vec3b>(j2, i2);
+				p1 = image.at<Vec3b>(i2, j2);
 			else p1 = Vec3b(0, 0, 0);
 
-			Vec3b p2 = image.at<Vec3b>(j, i);
+			Vec3b p2 = image.at<Vec3b>(i, j);
 
-			result.at<Vec3b>(j, i) = (p1 + p2) / 2;
+			result.at<Vec3b>(i, j) = (p1 + p2) / 2;
 		}
 	}
 
@@ -43,22 +43,20 @@ Mat ImageCompressor::Predict(const Mat &image)
 Mat ImageCompressor::CalcError(const Mat &image)
 {
 	Mat result(Size(image.cols, image.rows), CV_8SC3);
-	
 
 	Vec3sb p1 = image.at<Vec3sb>(0, 0);
 	Vec3sb p2 = inputImage.at<Vec3sb>(0, 0);
-	minError = Vec3sb(p1[0] - p2[0], p1[1] - p2[1], p1[2] - p2[2]);
-	maxError = minError;
+	minError = maxError = Vec3sb(p1[0] - p2[0], p1[1] - p2[1], p1[2] - p2[2]);
 		
-	for (int j = 0; j < image.rows; j++)
+	for (int i = 0; i < image.rows; i++)
 	{
-		for (int i = 0; i < image.cols; i++)
+		for (int j = 0; j < image.cols; j++)
 		{
-			Vec3sb p1 = image.at<Vec3sb>(j, i);
-			Vec3sb p2 = inputImage.at<Vec3sb>(j, i);
+			Vec3sb p1 = image.at<Vec3sb>(i, j);
+			Vec3sb p2 = inputImage.at<Vec3sb>(i, j);
 
 			Vec3sb err = Vec3sb(p1[0] - p2[0], p1[1] - p2[1], p1[2] - p2[2]);
-			result.at<Vec3sb>(j, i) = err;
+			result.at<Vec3sb>(i, j) = err;
 
 			for (int k = 0; k < 3; k++)
 			{
@@ -66,19 +64,12 @@ Mat ImageCompressor::CalcError(const Mat &image)
 					minError[k] = err[k];
 				if (err[k] > maxError[k])
 					maxError[k] = err[k];
-				//cout << "ERROR[" << k << "] " << err << endl;
 			}
 		}
 	}
 
-	for (int k = 0; k < 3; k++)
-	{
-		//cout << "Min error " << (int) minError[k] << endl;
-		//cout << "Max error " << (int) maxError[k] << endl;
+	avgError = (minError + maxError) / 2;
 
-		avgError[k] = (minError[k] + maxError[k]) / 2;
-		
-	}
 	cout << "Avg Error " << avgError << endl;
 	cout << "Max Error " << maxError << endl;
 	cout << "Min Error " << minError << endl;
@@ -92,8 +83,6 @@ Mat ImageCompressor::CalcError(const Mat &image)
 Mat ImageCompressor::Quantizate(const Mat &image)
 {
 	Mat result(Size(image.cols, image.rows), CV_8SC3);
-
-
 
 	for (int i = 0; i < image.rows; i++)
 	{

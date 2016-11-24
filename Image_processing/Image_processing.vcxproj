@@ -54,7 +54,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -88,8 +88,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExecutablePath>E:\! Downloads\opencv\build\x64\vc12\bin;C:\opencv\build\x64\vc12\bin;$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>E:\! Downloads\opencv\build\x64\vc12\lib;C:\opencv\build\x64\vc12\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(OPENCV_BIN64);E:\! Downloads\opencv\build\x64\vc12\bin;C:\opencv\build\x64\vc12\bin;$(ExecutablePath)</ExecutablePath>
+    <LibraryPath>$(OPENCV_LIB64);E:\! Downloads\opencv\build\x64\vc12\lib;C:\opencv\build\x64\vc12\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(OPENCV_INC);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
