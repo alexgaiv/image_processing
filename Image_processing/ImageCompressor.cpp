@@ -5,7 +5,8 @@
 Mat ImageCompressor::Compress(const Mat &image)
 {
 	inputImage = image;
-	return Huffman(LengthCoding(Quantizate(CalcError(Predict(image)))));
+	LengthCoding(Quantizate(CalcError(Predict(image))));
+	Huffman();
 }
 
 Mat ImageCompressor::Predict(const Mat &image)
@@ -91,7 +92,7 @@ Mat ImageCompressor::Quantizate(const Mat &image)
 			Vec3sb error = image.at<Vec3sb>(i, j);
 			for (int k = 0; k < 3; k++)
 			{
-				if (error[k] < (minError[k] + interval[k]/3))
+				if (error[k] < (minError[k] + interval[k] / 3))
 					result.at<Vec3sb>(i, j)[k] = (minError[k] + interval[k] / 3);
 				else
 					if (error[k] >= (minError[k] + interval[k] / 3) && error[k] <= (minError[k] + 2 * interval[k] / 3))
@@ -103,6 +104,7 @@ Mat ImageCompressor::Quantizate(const Mat &image)
 			cout << result.at<Vec3sb>(i, j) << endl;
 		}
 	}
+
 	cout << "LOWER AND HIGHER GATEWAYS " << minError[0] + interval[0] / 3 << " :: " << minError[0] + 2 * interval[0] / 3 << endl;
 	cout << "LOWER AND HIGHER GATEWAYS " << minError[1] + interval[1] / 3 << " :: " << minError[1] + 2 * interval[1] / 3 << endl;
 	cout << "LOWER AND HIGHER GATEWAYS " << minError[2] + interval[2] / 3 << " :: " << minError[2] + 2 * interval[2] / 3 << endl;
@@ -110,16 +112,50 @@ Mat ImageCompressor::Quantizate(const Mat &image)
 	return result;
 }
 
-Mat ImageCompressor::LengthCoding(const Mat &image)
+void ImageCompressor::LengthCoding(const Mat &image)
 {
-	Mat result(Size(image.cols, image.rows), image.type());
+	vector<RunLengthPair> codes[3];
 
-	return result;
+	for (int k = 0; k < 3; k++)
+	{
+		vector<RunLengthPair> &ck = codes[k];
+		ck.push_back(RunLengthPair(0, image.at<Vec3sb>(0, 0)[k]));
+
+		for (int i = 0; i < image.rows; i++)
+		{
+			for (int j = 0; j < image.rows; j++)
+			{
+				Vec3sb p = image.at<Vec3sb>(i, j);
+
+				if (p[k] == avgError[k])
+					ck[ck.size() - 1].tail++;
+				else {
+					ck.push_back(RunLengthPair(0, p[k]));
+				}
+			}
+		}
+
+		int last;
+		for (last = ck.size() - 1; last >= 0; last--)
+			if (ck[last].value != avgError[k]) break;
+
+		if (last < ck.size() - 2) {
+			ck.erase(ck.begin() + last + 2, ck.end());
+			ck[ck.size() - 1] = RunLengthPair(0, 0); // EOB
+		}
+
+		for (int i = 0; i < ck.size() - 1; i++)
+			PairToBits(k, ck[i]);
+	}
 }
 
-Mat ImageCompressor::Huffman(const Mat &image)
+void ImageCompressor::PairToBits(int channel, const RunLengthPair &p)
 {
-	Mat result(Size(image.cols, image.rows), image.type());
+	byte b = p.value;
+	// todo: fill bits array
+}
 
-	return result;
+void ImageCompressor::Huffman()
+{
+	
 }
