@@ -7,6 +7,7 @@ Mat ImageCompressor::Compress(const Mat &image)
 	inputImage = image;
 	LengthCoding(Quantizate(CalcError(Predict(image))));
 	Huffman();
+	return image;
 }
 
 Mat ImageCompressor::Predict(const Mat &image)
@@ -152,6 +153,27 @@ void ImageCompressor::LengthCoding(const Mat &image)
 void ImageCompressor::PairToBits(int channel, const RunLengthPair &p)
 {
 	byte b = p.value;
+	vector<bool> convert;
+	byte binaryLength = 8;
+	for (int i = 7; i >= 0; i--) {
+		if ((1 << i) & b) {
+			convert.push_back(true);
+		}
+		else {
+			convert.push_back(false);
+		}
+	}
+	for (int i = convert.size(); i > 0; i--) {
+		if (convert[i] == false) {
+			binaryLength--;
+		}
+		else
+			break;
+	}
+
+
+	//bits[channel].push_back()
+
 	// todo: fill bits array
 }
 
