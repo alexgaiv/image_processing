@@ -1,15 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Histogram.cpp" />
-    <ClCompile Include="ImageCompressor.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="watershed.cpp" />
+    <ClCompile Include="Histogram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageCompressor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="watershed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BiLinear.h" />
-    <ClInclude Include="Histogram.h" />
-    <ClInclude Include="ImageCompressor.h" />
-    <ClInclude Include="WatershedTobogganing.h" />
+    <ClInclude Include="BiLinear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Histogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageCompressor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WatershedTobogganing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{43803dc8-cb10-40a6-a7e3-ef12de239dd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{72133f1e-376c-4ad6-b70a-21ecb5c30fac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
