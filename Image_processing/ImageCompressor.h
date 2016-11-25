@@ -35,10 +35,10 @@ private:
 	Mat Predict(const Mat &image);
 	Mat CalcError(const Mat &image);
 	Mat Quantizate(const Mat &image);
-	void LengthCoding(const Mat &image);
-	void Huffman();
+	void LengthCodingAndHuffman(const Mat &image);
+	//void Huffman();
 
-	void PairToBits(int channel, const RunLengthPair &p);
+	void Huffman(int channel, const RunLengthPair &p);
 };
 
 #endif // _IMAGE_COMPRESSOR_H_

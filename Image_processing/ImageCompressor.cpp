@@ -5,8 +5,7 @@
 Mat ImageCompressor::Compress(const Mat &image)
 {
 	inputImage = image;
-	LengthCoding(Quantizate(CalcError(Predict(image))));
-	Huffman();
+	LengthCodingAndHuffman(Quantizate(CalcError(Predict(image))));
 	return image;
 }
 
@@ -113,7 +112,7 @@ Mat ImageCompressor::Quantizate(const Mat &image)
 	return result;
 }
 
-void ImageCompressor::LengthCoding(const Mat &image)
+void ImageCompressor::LengthCodingAndHuffman(const Mat &image)
 {
 	vector<RunLengthPair> codes[3];
 
@@ -146,11 +145,11 @@ void ImageCompressor::LengthCoding(const Mat &image)
 		}
 
 		for (int i = 0; i < ck.size() - 1; i++)
-			PairToBits(k, ck[i]);
+			Huffman(k, ck[i]);
 	}
 }
 
-void ImageCompressor::PairToBits(int channel, const RunLengthPair &p)
+void ImageCompressor::Huffman(int channel, const RunLengthPair &p)
 {
 	byte b = p.value;
 	vector<bool> convert;
@@ -175,9 +174,12 @@ void ImageCompressor::PairToBits(int channel, const RunLengthPair &p)
 	//bits[channel].push_back()
 
 	// todo: fill bits array
+	return;
 }
 
+/*
 void ImageCompressor::Huffman()
 {
 	
 }
+*/
