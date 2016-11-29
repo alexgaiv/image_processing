@@ -6,7 +6,6 @@ Mat ImageCompressor::Compress(const Mat &image)
 {
 	inputImage = image;
 	LengthCoding(Quantizate(CalcError(Predict(image))));
-	//Huffman();
 	return Mat();
 }
 
@@ -71,13 +70,13 @@ Mat ImageCompressor::CalcError(const Mat &image)
 	}
 
 	avgError = (minError + maxError) / 2;
+	interval = maxError - minError;
 
 	cout << "Avg Error " << avgError << endl;
 	cout << "Max Error " << maxError << endl;
 	cout << "Min Error " << minError << endl;
 
 	cout << endl;
-	interval = maxError - minError;
 	cout<< "Interval: " << interval << endl;
 	return result;
 }
@@ -115,12 +114,12 @@ Mat ImageCompressor::Quantizate(const Mat &image)
 
 void ImageCompressor::LengthCoding(const Mat &image)
 {
-	vector<RunLengthPair> codes[3];
+	vector<RunLengthPair> pairs[3];
 
 	for (int k = 0; k < 3; k++)
 	{
-		vector<RunLengthPair> &ck = codes[k];
-		ck.push_back(RunLengthPair(0, image.at<Vec3sb>(0, 0)[k]));
+		vector<RunLengthPair> &pk = pairs[k];
+		pk.push_back(RunLengthPair(0, image.at<Vec3sb>(0, 0)[k]));
 
 		for (int i = 0; i < image.rows; i++)
 		{
@@ -129,28 +128,28 @@ void ImageCompressor::LengthCoding(const Mat &image)
 				Vec3sb p = image.at<Vec3sb>(i, j);
 
 				if (p[k] == avgError[k])
-					ck[ck.size() - 1].tail++;
+					pk[pk.size() - 1].tail++;
 				else {
-					ck.push_back(RunLengthPair(0, p[k]));
+					pk.push_back(RunLengthPair(0, p[k]));
 				}
 			}
 		}
 
 		int last;
-		for (last = ck.size() - 1; last >= 0; last--)
-			if (ck[last].value != avgError[k]) break;
+		for (last = pk.size() - 1; last >= 0; last--)
+			if (pk[last].value != avgError[k]) break;
 
-		if (last < ck.size() - 2) {
-			ck.erase(ck.begin() + last + 2, ck.end());
-			ck[ck.size() - 1] = RunLengthPair(0, 0); // EOB
+		if (last < pk.size() - 2) {
+			pk.erase(pk.begin() + last + 2, pk.end());
+			pk[pk.size() - 1] = RunLengthPair(0, 0); // EOB
 		}
 
-		for (int i = 0; i < ck.size() - 1; i++)
-			Huffman(k, ck[i]);
+		for (int i = 0; i < pk.size() - 1; i++)
+			FillBits(k, pk[i]);
 	}
 }
 
-void ImageCompressor::Huffman(int channel, const RunLengthPair &p)
+void ImageCompressor::FillBits(int channel, const RunLengthPair &p)
 {
 	byte b = p.value;
 	vector<bool> convert;

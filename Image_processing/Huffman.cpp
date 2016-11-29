@@ -8,7 +8,7 @@ BinaryTreeNode::BinaryTreeNode(double value) : value(value)
 
 BinaryTreeNode::~BinaryTreeNode()
 {
-	// not using recursion here because tree height can be big
+	// not using recursion here, since tree height can be big
 
 	if (!left && !right) return;
 
@@ -54,7 +54,7 @@ BinaryTree Huffman::buildTree(vector<double> freqs)
 
 	while (nodes.size() != 1)
 	{
-		int s = nodes.size() - 1;
+		size_t s = nodes.size() - 1;
 		BinaryTreeNode *node = new BinaryTreeNode;
 		node->left = nodes[s];
 		node->right = nodes[s - 1];
@@ -64,7 +64,7 @@ BinaryTree Huffman::buildTree(vector<double> freqs)
 		nodes.pop_back();
 
 		bool found = false;
-		for (int i = nodes.size() - 1; i >= 0; i--) {
+		for (int i = (int)nodes.size() - 1; i >= 0; i--) {
 			if (node->value < nodes[i]->value) {
 				nodes.insert(nodes.begin() + i + 1, node);
 				found = true;

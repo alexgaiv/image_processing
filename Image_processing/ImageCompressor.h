@@ -36,9 +36,7 @@ private:
 	Mat CalcError(const Mat &image);
 	Mat Quantizate(const Mat &image);
 	void LengthCoding(const Mat &image);
-	//void Huffman();
-
-	void Huffman(int channel, const RunLengthPair &p);
+	void FillBits(int channel, const RunLengthPair &p);
 };
 
 #endif // _IMAGE_COMPRESSOR_H_

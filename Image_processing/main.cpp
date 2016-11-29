@@ -10,7 +10,6 @@
 #include "Histogram.h"
 #include "WatershedTobogganing.h"
 #include "BiLinear.h"
-#include "Huffman.h"
 
 
 #include "ImageCompressor.h"
