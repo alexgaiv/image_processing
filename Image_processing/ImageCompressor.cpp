@@ -7,6 +7,7 @@ Mat ImageCompressor::Compress(const Mat &image)
 	inputImage = image;
 	LengthCoding(Quantizate(CalcError(Predict(image))));
 	Huffman();
+	return Mat();
 }
 
 Mat ImageCompressor::Predict(const Mat &image)

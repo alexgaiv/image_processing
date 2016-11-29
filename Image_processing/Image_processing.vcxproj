@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Histogram.cpp" />
+    <ClCompile Include="Huffman.cpp" />
     <ClCompile Include="ImageCompressor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="watershed.cpp" />
@@ -27,6 +28,7 @@
   <ItemGroup>
     <ClInclude Include="BiLinear.h" />
     <ClInclude Include="Histogram.h" />
+    <ClInclude Include="Huffman.h" />
     <ClInclude Include="ImageCompressor.h" />
     <ClInclude Include="WatershedTobogganing.h" />
   </ItemGroup>
